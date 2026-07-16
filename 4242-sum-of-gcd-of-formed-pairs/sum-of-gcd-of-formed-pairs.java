@@ -3,29 +3,32 @@ class Solution {
         int n = nums.length;
         int[] prefixGcd = new int[n];
 
-        int maxSoFar = nums[0];
-        prefixGcd[0] = nums[0];               // gcd with itself is the number
+        int mx = 0;
 
-        for (int i = 1; i < n; i++) {
-            maxSoFar = Math.max(maxSoFar, nums[i]);
-            prefixGcd[i] = gcd(nums[i], maxSoFar);
+        for (int i = 0; i < n; i++) {
+            mx = Math.max(mx, nums[i]);
+            prefixGcd[i] = gcd(nums[i], mx);
         }
 
         Arrays.sort(prefixGcd);
 
-        long total = 0;
-        // pair smallest with largest, second smallest with second largest, etc.
-        for (int i = 0; i < n / 2; i++) {
-            total += gcd(prefixGcd[i], prefixGcd[n - 1 - i]);
+        long ans = 0;
+        int left = 0, right = n - 1;
+
+        while (left < right) {
+            ans += gcd(prefixGcd[left], prefixGcd[right]);
+            left++;
+            right--;
         }
-        return total;
+
+        return ans;
     }
 
     private int gcd(int a, int b) {
         while (b != 0) {
-            int t = b;
-            b = a % b;
-            a = t;
+            int t = a % b;
+            a = b;
+            b = t;
         }
         return a;
     }
