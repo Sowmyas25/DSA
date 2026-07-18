@@ -4,8 +4,10 @@ class Solution {
         int max = nums[0];
 
         for (int num : nums) {
-            min = Math.min(min, num);
-            max = Math.max(max, num);
+            // min = Math.min(min, num);
+            // max = Math.max(max, num);
+            if (num < min) min = num;
+            if (num > max) max = num;
         }
 
         return gcd(min, max);
