@@ -1,26 +1,24 @@
 class Solution {
     public int maximumLengthSubstring(String s) {
-        // Use an array for O(1) character frequency tracking
-        int[] charCounts = new int[26];
+        int[] count = new int[26];
         int left = 0;
-        int maxLength = 0;
-        
+        int maxLen = 0;
+
         for (int right = 0; right < s.length(); right++) {
-            // Get the integer index for the character (0-25)
-            int rightCharIndex = s.charAt(right) - 'a';
-            charCounts[rightCharIndex]++;
-            
-            // Shrink the window if the current character count exceeds 2
-            while (charCounts[rightCharIndex] > 2) {
-                int leftCharIndex = s.charAt(left) - 'a';
-                charCounts[leftCharIndex]--;
+            char c = s.charAt(right);
+            count[c - 'a']++;
+
+            // If any character appears more than twice, shrink the window
+            while (count[c - 'a'] > 2) {
+                char leftChar = s.charAt(left);
+                count[leftChar - 'a']--;
                 left++;
             }
-            
-            // Update the maximum length found
-            maxLength = Math.max(maxLength, right - left + 1);
+
+            // Now the window [left, right] is valid
+            maxLen = Math.max(maxLen, right - left + 1);
         }
-        
-        return maxLength;
+
+        return maxLen;
     }
 }
