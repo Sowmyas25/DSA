@@ -10,7 +10,6 @@ class Solution {
             n = n / 10;
         }
 
-        if (num % (sum + prod) == 0) return true;
-        else return false;
+        return num % (sum + prod) == 0;
     }
 }
